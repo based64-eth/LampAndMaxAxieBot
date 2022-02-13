@@ -53,6 +53,9 @@ slpEmojiID = {}
 graphQL = "https://graphql-gateway.axieinfinity.com/graphql"
 gameAPI = "https://game-api.skymavis.com/game-api"
 
+def formatToRonin(address):
+    return address.replace('0x', 'ronin:', 1);
+
 
 def getQRCode(accessToken, discordID):
     # Function to create a QRCode from the accessToken
@@ -446,7 +449,7 @@ async def getPlayerDailies(targetId, discordName, roninKey, roninAddr, guildId=N
         embed = discord.Embed(title="Scholar Daily Stats", description="Daily stats for scholar " + discordName,
                               timestamp=datetime.datetime.utcnow(), color=discord.Color.blue())
         embed.add_field(name=":book: Scholar Name", value=f"{name}")
-        embed.add_field(name=":house: Ronin Address", value=f"{roninAddr}")
+        embed.add_field(name=":house: Ronin Address", value=f"{formatToRonin(roninAddr)}")
         embed.add_field(name=":baggage_claim: Next Claim Ready", value=f"<t:{nextClaimStamp}:R>")
         embed.add_field(name="Lifetime SLP", value=f"{lifetimeSlp} {slpIcon}")
         embed.add_field(name="Current SLP", value=f"{inGameSlp} {slpIcon}")
