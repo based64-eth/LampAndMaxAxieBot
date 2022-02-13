@@ -18,6 +18,9 @@ import DB
 import UtilBot
 from Common import prefix, client, dmPayoutsToScholars
 
+def formatToRonin(address):
+    return address.replace('0x', 'ronin:', 1);
+
 
 # Returns information on available commands
 async def helpCommand(message, isManager, discordId, isSlash=False):
@@ -349,8 +352,8 @@ async def getScholar(message, args, discordId, isSlash=False):
     embed.add_field(name=":clock1: Scholar Created", value=f"<t:{createdTime}:D>")
     embed.add_field(name="Seed", value=f"{seedNum}")
     embed.add_field(name="Account", value=f"{accountNum}")
-    embed.add_field(name="Account Address", value=f"{roninAddr}")
-    embed.add_field(name="Payout Address", value=f"{scholarAddr}")
+    embed.add_field(name="Account Address", value=f"{formatToRonin(roninAddr)}")
+    embed.add_field(name="Payout Address", value=f"{formatToRonin(scholarAddr)}")
 
     if isSlash:
         await message.edit(content=f"<@{authorID}>", embed=embed)
@@ -434,7 +437,7 @@ async def addScholar(message, args, discordId, isSlash=False):
     embed.add_field(name="Address", value=f"{roninAddr}")
 
     if payoutAddress != "":
-        embed.add_field(name="Payout Address", value=f"{payoutAddress}")
+        embed.add_field(name="Payout Address", value=f"{formatToRonin(payoutAddress)}")
 
     embed.set_footer(text="Click \N{White Heavy Check Mark} to confirm.")
 
@@ -606,7 +609,7 @@ async def updateScholarLogin(message, args, discordId, isSlash=False):
                           timestamp=datetime.datetime.utcnow(), color=discord.Color.blue())
     embed.add_field(name=":book: Scholar Name", value=f"{name}")
     embed.add_field(name=":id: Scholar Discord ID", value=f"{discordUID}")
-    embed.add_field(name=":house: Scholar Account Address", value=f"{scholarAddr}")
+    embed.add_field(name=":house: Scholar Account Address", value=f"{formatToRonin(scholarAddr)}")
     embed.add_field(name=":email: Scholar Account Email", value=f"{email}")
     embed.add_field(name=":man_technologist: Scholar Account Password", value=f"{password}")
 
@@ -1058,7 +1061,7 @@ async def payoutCommand(message, args, isManager, discordId, isSlash=False):
     embed.add_field(name="Scholar Name", value=f"{name}")
     embed.add_field(name="Scholar Discord ID", value=f"{discordId}")
     embed.add_field(name="Scholar Share", value=f"{round(share * 100, 3)}")
-    embed.add_field(name="Payout Address", value=f"{payoutAddr}")
+    embed.add_field(name="Payout Address", value=f"{formatToRonin(payoutAddr)}")
     embed.add_field(name="Note", value="Please carefully check the payout address! Misplaced SLP cannot be recovered!")
 
     embed.set_footer(text="Click \N{White Heavy Check Mark} to confirm.")
